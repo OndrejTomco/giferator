@@ -1,0 +1,45 @@
+import React, { Component } from 'react';
+import './App.css';
+import SearchBar from './components/SearchBar';
+import Gallery from './components/Gallery';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentGifs: []
+    };
+  }
+
+  componentDidMount(){
+    this.getGif('trending');
+  }
+
+  getGif = async (input) => {
+    let url;
+    if(input === 'trending') url = 'http://api.giphy.com/v1/gifs/trending?&api_key=tjj2FSAfz5EZ4BpIJ72JbeFVKNzIHOxw';
+    else url = 'http://api.giphy.com/v1/gifs/search?q=' + input + '&api_key=tjj2FSAfz5EZ4BpIJ72JbeFVKNzIHOxw';
+
+    this.setState({ currentGifs: [] });
+    const response = await fetch(url);
+    const json = await response.json();
+    console.log(JSON.stringify(json.data, null, 2));
+
+    this.setState({ currentGifs: json.data });
+}
+
+  render() {
+    return (
+      <div className="App">
+        <SearchBar request={this.getGif} />
+        <div className="row">
+          <div className="col">
+          <Gallery gifs = {this.state.currentGifs} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default App;
