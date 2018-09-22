@@ -11,20 +11,32 @@ const SearchBar = (props) => {
 
     const handleInput = () => {
         let input = document.getElementById('gifSearchBar').value;
-        console.log(props.request(input));
+        props.request(input);
     }
 
     const getTrending = () => {
         props.request('trending');
     }
 
+    const getFavorite = () => {
+        props.getFavorite();
+
+    }
+
     return (
-        <div>
-            <span className="display-3 mr-5 header">Giferator</span>
-            <input onKeyDown={checkKey} spellCheck="false" id="gifSearchBar" type="text" className="" placeholder="Look for your favorite gifs" />
-            <button onClick={handleInput} className="ml-3 btn btn-primary btn-lg text-white" id="searchButton">Go !</button>
-            <button onClick={getTrending} className="ml-3 btn btn-outline-danger btn-lg" id="trending">Trending</button>
-            <hr />
+        <div className="search-group mt-2">
+            <div className="form-inline">
+                <h1 className="display-3 mr-5 mb-3 header d-inline-block">Giferator</h1>
+                <div className="input-group">
+                    <input onKeyDown={checkKey} spellCheck="false" type="text" className="form-control" id="gifSearchBar" placeholder="Look for your favorite gifs" />
+                    <div className="input-group-append">
+                        <button onClick={handleInput} className="btn btn-primary" type="button" id="searchButton">Go !</button>
+                    </div>
+                    <button onClick={getTrending} className="ml-3 btn btn-outline-danger" id="trending">Trending</button>
+                    <button onClick={getFavorite} className="ml-3 btn btn-outline-success" id="favorite">Favorite</button>
+                </div>
+
+            </div>
         </div>
     )
 }
